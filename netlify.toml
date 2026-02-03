@@ -6,9 +6,6 @@
   publish = "dist"
   environment = { NODE_VERSION = "20" }
 
-[build.environment]
-  NODE_VERSION = "20"
-
 # Optional: redirects for SPA or custom routes
 # [[redirects]]
 #   from = "/*"
