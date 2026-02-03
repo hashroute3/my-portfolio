@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-surface-950 text-surface-100 antialiased;
+  }
+}
+
+@layer components {
+  .prose-invert {
+    @apply prose-headings:text-surface-50 prose-p:text-surface-300 prose-a:text-sky-400 prose-strong:text-surface-100 prose-code:text-sky-300;
+  }
+}

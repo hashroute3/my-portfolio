@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HighlightCard from '../components/HighlightCard.astro';
+---
+
+<BaseLayout title="Home" description="Founding Engineer | Researcher | Author — Personal research website showcasing publications, blog, and professional contributions.">
+  <article class="mx-auto max-w-5xl px-6 py-16">
+    <header class="animate-fade-in">
+      <h1 class="font-serif text-3xl font-semibold text-surface-50 sm:text-4xl">
+        Founding Engineer · Researcher · Author
+      </h1>
+      <p class="mt-4 max-w-2xl text-lg text-surface-400">
+        Senior engineer and researcher focused on systems, algorithms, and applied research.
+        This site hosts my publications, journal work, blog posts, and professional contributions.
+      </p>
+    </header>
+
+    <section class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-2" aria-label="Quick links">
+      <HighlightCard
+        title="Research & Journals"
+        description="Peer-reviewed journals and research articles."
+        href="/research/"
+        cta="View Publications"
+      />
+      <HighlightCard
+        title="Authored Papers"
+        description="Formal papers with abstracts, citations, and PDFs."
+        href="/papers/"
+        cta="View Papers"
+      />
+      <HighlightCard
+        title="Blog & Writing"
+        description="Technical and research-oriented blog posts."
+        href="/blog/"
+        cta="Read Blog"
+      />
+      <HighlightCard
+        title="Professional Contributions"
+        description="Talks, reviews, and community work."
+        href="/talks/"
+        cta="View Contributions"
+      />
+    </section>
+
+    <section class="mt-16 flex flex-wrap gap-4" aria-label="Call to action">
+      <a
+        href="/papers/"
+        class="inline-flex items-center rounded-lg bg-sky-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-500"
+      >
+        View Publications
+      </a>
+      <a
+        href="/blog/"
+        class="inline-flex items-center rounded-lg border border-surface-700 px-5 py-2.5 text-sm font-medium text-surface-200 transition-colors hover:border-surface-600 hover:bg-surface-800"
+      >
+        Read Blog
+      </a>
+      <a
+        href="/contact/#cv"
+        class="inline-flex items-center rounded-lg border border-surface-700 px-5 py-2.5 text-sm font-medium text-surface-200 transition-colors hover:border-surface-600 hover:bg-surface-800"
+      >
+        Download CV
+      </a>
+    </section>
+  </article>
+</BaseLayout>

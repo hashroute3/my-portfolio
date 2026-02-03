@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const papers = await getCollection('papers');
+  return papers.map((entry) => ({ params: { slug: entry.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.abstract} type="article">
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <header>
+      <h1 class="font-serif text-3xl font-semibold text-surface-50">{entry.data.title}</h1>
+      <p class="mt-2 text-sm text-surface-400">
+        {entry.data.venue} · {entry.data.year} · {entry.data.topic}
+      </p>
+    </header>
+    <p class="mt-6 text-surface-300">{entry.data.abstract}</p>
+    {entry.data.citation && (
+      <blockquote class="mt-6 border-l-2 border-surface-700 pl-4 text-sm italic text-surface-400">
+        {entry.data.citation}
+      </blockquote>
+    )}
+    <div class="mt-8 flex flex-wrap gap-3">
+      {entry.data.pdfUrl && (
+        <a href={entry.data.pdfUrl} class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-500" target="_blank" rel="noopener">
+          PDF
+        </a>
+      )}
+      {entry.data.externalUrl && (
+        <a href={entry.data.externalUrl} class="rounded-lg border border-surface-700 px-4 py-2 text-sm font-medium text-surface-200 hover:bg-surface-800" target="_blank" rel="noopener">
+          External link
+        </a>
+      )}
+      {entry.data.doi && (
+        <a href={`https://doi.org/${entry.data.doi}`} class="text-sky-400 hover:underline" target="_blank" rel="noopener">
+          DOI
+        </a>
+      )}
+    </div>
+    <div class="prose prose-invert mt-10 max-w-none">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

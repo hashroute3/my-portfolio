@@ -1,0 +1,26 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  cta?: string;
+}
+
+const { title, description, href, cta = 'View' } = Astro.props;
+---
+
+<a
+  href={href}
+  class="group block rounded-xl border border-surface-800 bg-surface-900/50 p-6 transition-all hover:border-surface-700 hover:bg-surface-800/50"
+>
+  <h3 class="font-serif text-lg font-semibold text-surface-50 transition-colors group-hover:text-sky-400">
+    {title}
+  </h3>
+  <p class="mt-2 text-sm text-surface-400">
+    {description}
+  </p>
+  <span class="mt-4 inline-flex items-center text-sm font-medium text-sky-400 group-hover:underline">
+    {cta}
+    <span class="ml-1 transition-transform group-hover:translate-x-0.5" aria-hidden="true">→</span>
+  </span>
+</a>

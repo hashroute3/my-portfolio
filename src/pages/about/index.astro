@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="Professional biography, expertise, career highlights, and achievements.">
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <header>
+      <h1 class="font-serif text-3xl font-semibold text-surface-50">About</h1>
+      <p class="mt-2 text-surface-400">Professional biography and expertise.</p>
+    </header>
+
+    <div class="prose prose-invert mt-10 max-w-none">
+      <section>
+        <h2 class="font-serif text-xl font-semibold text-surface-100">Biography</h2>
+        <p class="mt-2 text-surface-300">
+          [Replace with your professional biography. Keep it concise and credible: background, current role, research interests, and key contributions.]
+        </p>
+      </section>
+
+      <section class="mt-10">
+        <h2 class="font-serif text-xl font-semibold text-surface-100">Areas of Expertise</h2>
+        <ul class="mt-2 list-disc space-y-1 pl-6 text-surface-300">
+          <li>Systems & distributed systems</li>
+          <li>Algorithms & data structures</li>
+          <li>Research methodology & publication</li>
+          <li>[Add your domains]</li>
+        </ul>
+      </section>
+
+      <section class="mt-10">
+        <h2 class="font-serif text-xl font-semibold text-surface-100">Career Highlights</h2>
+        <ul class="mt-2 list-disc space-y-1 pl-6 text-surface-300">
+          <li>Founding / senior engineering roles</li>
+          <li>Notable projects or products</li>
+          <li>Research collaborations</li>
+        </ul>
+      </section>
+
+      <section class="mt-10">
+        <h2 class="font-serif text-xl font-semibold text-surface-100">Awards & Recognitions</h2>
+        <ul class="mt-2 list-disc space-y-1 pl-6 text-surface-300">
+          <li>[Award or recognition 1]</li>
+          <li>[Award or recognition 2]</li>
+        </ul>
+      </section>
+
+      <section class="mt-10">
+        <h2 class="font-serif text-xl font-semibold text-surface-100">Timeline (Optional)</h2>
+        <div class="mt-4 space-y-6 border-l-2 border-surface-700 pl-6">
+          <div>
+            <span class="text-sm font-medium text-sky-400">2020 – Present</span>
+            <p class="mt-1 text-surface-300">[Role and brief description]</p>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-sky-400">2018 – 2020</span>
+            <p class="mt-1 text-surface-300">[Role and brief description]</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

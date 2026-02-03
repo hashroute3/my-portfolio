@@ -1,0 +1,30 @@
+---
+title: "Sample Blog Post: Code and Research Notes"
+description: "A sample MDX post demonstrating syntax highlighting, tags, and reading time."
+publishDate: 2025-01-15
+tags: ["research", "code", "sample"]
+author: "Author Name"
+draft: false
+---
+
+This is a sample blog post in **MDX**. You can use Markdown and JSX.
+
+## Code block with syntax highlighting
+
+Here is a short code snippet that will be highlighted:
+
+```ts
+function estimateReadingTime(body: string): number {
+  const wordsPerMinute = 200;
+  const wordCount = body.split(/\s+/).length;
+  return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+}
+```
+
+## Lists and structure
+
+- Research workflows benefit from static sites.
+- Astro keeps the site fast and content in Markdown/MDX.
+- Netlify provides one-click deploy and optional forms.
+
+Replace this file with your own posts in `src/content/blog/`. Use the same frontmatter fields: `title`, `description`, `publishDate`, `tags`, and optionally `author` and `draft`.
