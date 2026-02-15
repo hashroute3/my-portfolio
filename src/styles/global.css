@@ -15,4 +15,12 @@
   .prose-invert {
     @apply prose-headings:text-surface-50 prose-p:text-surface-300 prose-a:text-sky-400 prose-strong:text-surface-100 prose-code:text-sky-300;
   }
+
+  /* Expandable experience: hide default marker, add chevron */
+  .experience-summary::-webkit-details-marker {
+    display: none;
+  }
+  .experience-summary {
+    position: relative;
+  }
 }

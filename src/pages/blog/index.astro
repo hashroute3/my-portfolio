@@ -30,10 +30,12 @@ const tags = [...new Set(allPosts.flatMap((p) => p.data.tags))].sort();
 
     <ul class="mt-12 space-y-8" role="list">
       {allPosts.map((entry) => {
-        const readingTime = Math.max(1, Math.ceil((entry.body.length / 1000) * 2));
+        const isExternal = !!entry.data.externalUrl;
+        const href = isExternal ? entry.data.externalUrl! : `/blog/${entry.slug}/`;
+        const readingTime = isExternal ? null : Math.max(1, Math.ceil((entry.body.length / 1000) * 2));
         return (
           <li class="rounded-xl border border-surface-800 bg-surface-900/50 p-6 transition-colors hover:border-surface-700">
-            <a href={`/blog/${entry.slug}/`} class="block">
+            <a href={href} class="block" target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
               <h2 class="font-serif text-lg font-semibold text-surface-50 transition-colors hover:text-sky-400">
                 {entry.data.title}
               </h2>
@@ -41,8 +43,18 @@ const tags = [...new Set(allPosts.flatMap((p) => p.data.tags))].sort();
                 <time datetime={entry.data.publishDate.toISOString()}>
                   {entry.data.publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </time>
-                <span class="mx-2">·</span>
-                <span>{readingTime} min read</span>
+                {readingTime != null && (
+                  <>
+                    <span class="mx-2">·</span>
+                    <span>{readingTime} min read</span>
+                  </>
+                )}
+                {isExternal && (
+                  <>
+                    <span class="mx-2">·</span>
+                    <span class="text-sky-400">Medium</span>
+                  </>
+                )}
               </p>
               <p class="mt-2 text-surface-300">{entry.data.description}</p>
               {entry.data.tags.length > 0 && (

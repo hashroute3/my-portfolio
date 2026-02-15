@@ -10,6 +10,7 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     author: z.string().optional(),
     draft: z.boolean().default(false),
+    externalUrl: z.string().optional(), // when set, post is a link to external site (e.g. Medium)
   }),
 });
 

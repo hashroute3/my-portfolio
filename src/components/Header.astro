@@ -1,37 +1,34 @@
 ---
 const currentPath = Astro.url.pathname;
 const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/about/', label: 'About' },
-  { href: '/research/', label: 'Research & Journals' },
-  { href: '/papers/', label: 'Papers' },
-  { href: '/blog/', label: 'Blog' },
-  { href: '/talks/', label: 'Talks & Community' },
-  { href: '/contact/', label: 'Contact' },
+  { href: '/#experience', label: 'journey' },
+  { href: '/blog/', label: 'thoughts' },
+  { href: '/skills/', label: 'skills' },
+  { href: '/ai/', label: 'ai' },
+  { href: '/contact/', label: 'contact' },
 ];
 ---
 
 <header class="sticky top-0 z-50 border-b border-surface-800/80 bg-surface-950/90 backdrop-blur-sm">
-  <nav class="mx-auto flex max-w-5xl items-center justify-between gap-6 px-6 py-4" aria-label="Main navigation">
-    <a href="/" class="font-serif text-lg font-semibold text-surface-50 transition-colors hover:text-sky-400">
-      Research Portfolio
-    </a>
-    <ul class="flex flex-wrap items-center gap-1 sm:gap-4">
-      {navItems.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            class:list={[
-              'rounded px-2 py-1.5 text-sm font-medium transition-colors',
-              currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
-                ? 'text-sky-400'
-                : 'text-surface-400 hover:text-surface-100',
-            ]}
-          >
-            {item.label}
-          </a>
-        </li>
-      ))}
+  <nav class="mx-auto flex max-w-3xl items-center justify-end gap-6 px-6 py-4" aria-label="Main navigation">
+    <ul class="flex items-center gap-6">
+      {navItems.map((item) => {
+        const isExternal = item.href.startsWith('http') || item.href.startsWith('#');
+        const isActive = !isExternal && (currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href)));
+        return (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'text-sm font-medium transition-colors',
+                isActive ? 'text-sky-400' : 'text-surface-400 hover:text-surface-100',
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   </nav>
 </header>

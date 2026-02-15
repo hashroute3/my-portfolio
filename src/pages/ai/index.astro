@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site, ai } from '../../data/profile';
+---
+
+<BaseLayout
+  title="mahendran://ai"
+  description={`Chat with ${site.name}'s AI — ${ai.intro}`}
+>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <header>
+      <h1 class="font-mono text-2xl font-medium text-surface-100 sm:text-3xl">
+        mahendran://ai
+      </h1>
+      <p class="mt-2 text-surface-400">
+        {ai.tagline}
+      </p>
+    </header>
+
+    <h2 class="mt-12 font-serif text-xl font-semibold text-surface-100">
+      {ai.heading}
+    </h2>
+
+    <!-- Chat area -->
+    <div class="mt-6 rounded-xl border border-surface-800 bg-surface-900/50 overflow-hidden">
+      <div id="chat-messages" class="flex min-h-[200px] flex-col gap-4 p-6" role="log" aria-live="polite">
+        <div class="msg msg-bot flex gap-3" data-role="bot">
+          <span class="text-surface-500 shrink-0 text-xs uppercase" aria-hidden="true">AI</span>
+          <p class="text-surface-300">
+            {ai.intro}
+          </p>
+        </div>
+      </div>
+
+      <div class="border-t border-surface-800 px-6 py-4">
+        <p class="mb-3 text-sm text-surface-500">Suggested questions:</p>
+        <div id="suggestions" class="flex flex-wrap gap-2">
+          {ai.suggestedQuestions.map((q) => (
+            <button
+              type="button"
+              class="suggestion-chip rounded-full border border-surface-700 bg-surface-800/80 px-4 py-2 text-sm text-surface-300 transition-colors hover:border-surface-600 hover:bg-surface-700/80 hover:text-surface-100"
+              data-question={q}
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+        <form id="chat-form" class="mt-4 flex gap-2">
+          <input
+            type="text"
+            name="message"
+            id="chat-input"
+            placeholder="Ask anything..."
+            autocomplete="off"
+            class="flex-1 rounded-lg border border-surface-700 bg-surface-800 px-4 py-2.5 text-surface-100 placeholder:text-surface-500 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+          />
+          <button
+            type="submit"
+            class="rounded-lg bg-sky-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-500"
+          >
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="mt-12 text-center">
+      <p class="text-surface-400">
+        {ai.ctaHeading}
+      </p>
+      <a
+        href={ai.ctaHref}
+        class="mt-2 inline-block font-medium text-sky-400 hover:underline"
+      >
+        {ai.ctaLabel}
+      </a>
+    </section>
+  </article>
+
+  <script
+    define:vars={{
+      answersJson: JSON.stringify(ai.answers),
+      fallbackAnswer: ai.fallbackAnswer,
+    }}
+  >
+    const messagesEl = document.getElementById('chat-messages');
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input') as HTMLInputElement;
+    const answers: Record<string, string> = typeof answersJson === 'string' ? JSON.parse(answersJson) : answersJson;
+
+    function getAnswer(question: string): string {
+      const normalized = question.trim();
+      const key = Object.keys(answers).find((k) => k.toLowerCase() === normalized.toLowerCase());
+      return key ? answers[key] : fallbackAnswer;
+    }
+
+    function appendMessage(role: 'user' | 'bot', text: string) {
+      const div = document.createElement('div');
+      div.className = role === 'user' ? 'msg msg-user flex justify-end gap-3' : 'msg msg-bot flex gap-3';
+      div.setAttribute('data-role', role);
+      if (role === 'user') {
+        div.innerHTML = `<p class="text-surface-200">${escapeHtml(text)}</p><span class="text-surface-500 shrink-0 text-xs uppercase" aria-hidden="true">You</span>`;
+      } else {
+        div.innerHTML = `<span class="text-surface-500 shrink-0 text-xs uppercase" aria-hidden="true">AI</span><p class="text-surface-300">${escapeHtml(text)}</p>`;
+      }
+      messagesEl?.appendChild(div);
+      messagesEl?.scrollTo({ top: messagesEl.scrollHeight, behavior: 'smooth' });
+    }
+
+    function escapeHtml(s: string): string {
+      const span = document.createElement('span');
+      span.textContent = s;
+      return span.innerHTML;
+    }
+
+    function sendQuestion(question: string) {
+      if (!question.trim()) return;
+      appendMessage('user', question);
+      const answer = getAnswer(question);
+      setTimeout(() => appendMessage('bot', answer), 300);
+      input.value = '';
+    }
+
+    document.querySelectorAll('.suggestion-chip').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const q = (btn as HTMLButtonElement).getAttribute('data-question');
+        if (q) sendQuestion(q);
+      });
+    });
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!input?.value?.trim()) return;
+      sendQuestion(input.value.trim());
+    });
+  </script>
+</BaseLayout>

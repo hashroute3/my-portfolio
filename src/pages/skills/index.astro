@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site, skillsByCategory } from '../../data/profile';
+---
+
+<BaseLayout
+  title="Skills"
+  description={`Technologies and tools ${site.name} works with.`}
+>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <header>
+      <h1 class="font-serif text-3xl font-semibold text-surface-50">Skills</h1>
+      <p class="mt-2 text-surface-400">
+        Technologies and tools I work with.
+      </p>
+    </header>
+
+    <div class="mt-12 space-y-12">
+      {skillsByCategory.map(({ category, items }) => (
+        <section aria-labelledby={`skills-${category.replace(/\s+/g, '-').toLowerCase()}`}>
+          <h2
+            id={`skills-${category.replace(/\s+/g, '-').toLowerCase()}`}
+            class="font-serif text-xl font-semibold text-surface-100"
+          >
+            {category}
+          </h2>
+          <p class="mt-4 flex flex-wrap gap-2 text-sm text-surface-300">
+            {items.map((item) => (
+              <span class="rounded-md bg-surface-800 px-2.5 py-1 text-surface-300">
+                {item}
+              </span>
+            ))}
+          </p>
+        </section>
+      ))}
+    </div>
+  </article>
+</BaseLayout>

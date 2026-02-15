@@ -1,66 +1,127 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HighlightCard from '../components/HighlightCard.astro';
+import SocialIcon from '../components/SocialIcon.astro';
+import { site, social, experience, projects } from '../data/profile';
 ---
 
-<BaseLayout title="Home" description="Founding Engineer | Researcher | Author — Personal research website showcasing publications, blog, and professional contributions.">
-  <article class="mx-auto max-w-5xl px-6 py-16">
+<BaseLayout
+  title={site.name}
+  description={`${site.tagline} — ${site.intro.slice(0, 120)}…`}
+>
+  <article class="mx-auto max-w-3xl px-6 pb-24 pt-12">
+    <!-- Hero -->
     <header class="animate-fade-in">
-      <h1 class="font-serif text-3xl font-semibold text-surface-50 sm:text-4xl">
-        Founding Engineer · Researcher · Author
+      <img src="/logo.png" alt="" width="150" height="150" class="h-[150px] w-[150px] rounded-full object-cover" />
+      <h1 class="mt-6 font-serif text-3xl font-semibold tracking-tight text-surface-50 sm:text-4xl">
+        {site.name}
       </h1>
-      <p class="mt-4 max-w-2xl text-lg text-surface-400">
-        Senior engineer and researcher focused on systems, algorithms, and applied research.
-        This site hosts my publications, journal work, blog posts, and professional contributions.
+      <p class="mt-2 font-medium text-surface-300">
+        {site.tagline}
       </p>
+      <p class="mt-1 text-surface-400">
+        {site.taglineAlt}
+      </p>
+      <p class="mt-6 max-w-2xl text-base leading-relaxed text-surface-300">
+        {site.intro}
+      </p>
+      <div class="mt-6 flex flex-wrap items-center gap-5" aria-label="Social links">
+        {social.map((link) => (
+          <a
+            href={link.href}
+            target={link.href.startsWith('http') || link.href.startsWith('mailto:') ? '_blank' : undefined}
+            rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            class="inline-flex items-center gap-2 text-sm font-medium lowercase text-surface-400 transition-colors hover:text-sky-400"
+            aria-label={link.label}
+          >
+            <SocialIcon name={link.icon} />
+            {link.label}
+          </a>
+        ))}
+      </div>
     </header>
 
-    <section class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-2" aria-label="Quick links">
-      <HighlightCard
-        title="Research & Journals"
-        description="Peer-reviewed journals and research articles."
-        href="/research/"
-        cta="View Publications"
-      />
-      <HighlightCard
-        title="Authored Papers"
-        description="Formal papers with abstracts, citations, and PDFs."
-        href="/papers/"
-        cta="View Papers"
-      />
-      <HighlightCard
-        title="Blog & Writing"
-        description="Technical and research-oriented blog posts."
-        href="/blog/"
-        cta="Read Blog"
-      />
-      <HighlightCard
-        title="Professional Contributions"
-        description="Talks, reviews, and community work."
-        href="/talks/"
-        cta="View Contributions"
-      />
+    <!-- Experience (expandable sections like Anayat’s page) -->
+    <section class="mt-20" id="experience" aria-labelledby="experience-heading">
+      <h2 id="experience-heading" class="font-serif text-xl font-semibold text-surface-100">
+        Experience
+      </h2>
+      <div class="mt-8 space-y-0">
+        {experience.map((job) => (
+          <details class="experience-details group border-b border-surface-800/80">
+            <summary class="experience-summary cursor-pointer list-none py-5 pr-10 select-none">
+              <span class="pointer-events-none flex min-w-0 flex-1 items-start gap-4">
+                <span class="experience-logo-wrap relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded bg-surface-800">
+                  <img
+                    src={job.logo}
+                    alt=""
+                    width={40}
+                    height={40}
+                    class="experience-logo size-10 object-contain"
+                    loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling?.classList.remove('hidden')"
+                  />
+                  <span class="logo-fallback hidden flex size-10 items-center justify-center rounded bg-surface-700 text-sm font-semibold text-surface-300" aria-hidden="true">
+                    {job.company.charAt(0)}
+                  </span>
+                </span>
+                <span class="flex min-w-0 flex-col gap-0.5">
+                  <span class="font-serif text-lg font-semibold text-surface-50">{job.company}</span>
+                  <span class="font-medium text-surface-300">{job.role}</span>
+                  <span class="text-sm text-surface-500">
+                    {job.period}
+                    {job.period && job.location ? ' · ' : ''}
+                    {job.location}
+                  </span>
+                </span>
+              </span>
+              <span class="absolute right-0 top-6 shrink-0 text-surface-500 transition-transform group-open:rotate-180" aria-hidden="true">
+                <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </summary>
+            <div class="pb-6 pl-0">
+              <ul class="list-disc space-y-1.5 pl-5 text-sm text-surface-300">
+                {job.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        ))}
+      </div>
     </section>
 
-    <section class="mt-16 flex flex-wrap gap-4" aria-label="Call to action">
-      <a
-        href="/papers/"
-        class="inline-flex items-center rounded-lg bg-sky-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sky-500"
-      >
-        View Publications
-      </a>
-      <a
-        href="/blog/"
-        class="inline-flex items-center rounded-lg border border-surface-700 px-5 py-2.5 text-sm font-medium text-surface-200 transition-colors hover:border-surface-600 hover:bg-surface-800"
-      >
-        Read Blog
-      </a>
-      <a
-        href="/contact/#cv"
-        class="inline-flex items-center rounded-lg border border-surface-700 px-5 py-2.5 text-sm font-medium text-surface-200 transition-colors hover:border-surface-600 hover:bg-surface-800"
-      >
-        Download CV
-      </a>
+    <!-- Projects -->
+    <section class="mt-20" id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading" class="font-serif text-xl font-semibold text-surface-100">
+        Projects
+      </h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2">
+        {projects.map((project) => (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block rounded-lg border border-surface-800 bg-surface-900/50 p-5 transition-colors hover:border-surface-700 hover:bg-surface-800/50"
+          >
+            <h3 class="font-medium text-surface-100 group-hover:text-sky-400">
+              {project.name}
+            </h3>
+            <p class="mt-2 text-sm text-surface-400">
+              {project.description}
+            </p>
+            {project.tags?.length ? (
+              <p class="mt-3 text-xs text-surface-500">
+                {project.tags.join(' · ')}
+              </p>
+            ) : null}
+          </a>
+        ))}
+      </div>
+      <p class="mt-4 text-sm text-surface-500">
+        Feel free to explore my <a href="https://github.com/hashroute3" class="text-sky-400 hover:underline" target="_blank" rel="noopener">GitHub</a> for more projects. Most of them are open-source.
+      </p>
     </section>
   </article>
 </BaseLayout>
