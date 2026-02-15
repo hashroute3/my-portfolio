@@ -21,8 +21,13 @@ import { site, ai } from '../../data/profile';
       {ai.heading}
     </h2>
 
-    <!-- Chat area -->
-    <div class="mt-6 rounded-xl border border-surface-800 bg-surface-900/50 overflow-hidden">
+    <!-- Chat area: answers and fallback passed via data for reliable production script -->
+    <div
+      id="chat-container"
+      class="mt-6 rounded-xl border border-surface-800 bg-surface-900/50 overflow-hidden"
+      data-answers={JSON.stringify(ai.answers)}
+      data-fallback={ai.fallbackAnswer}
+    >
       <div id="chat-messages" class="flex min-h-[200px] flex-col gap-4 p-6" role="log" aria-live="polite">
         <div class="msg msg-bot flex gap-3" data-role="bot">
           <span class="text-surface-500 shrink-0 text-xs uppercase" aria-hidden="true">AI</span>
@@ -78,61 +83,74 @@ import { site, ai } from '../../data/profile';
     </section>
   </article>
 
-  <script
-    define:vars={{
-      answersJson: JSON.stringify(ai.answers),
-      fallbackAnswer: ai.fallbackAnswer,
-    }}
-  >
-    const messagesEl = document.getElementById('chat-messages');
-    const form = document.getElementById('chat-form');
-    const input = document.getElementById('chat-input') as HTMLInputElement;
-    const answers: Record<string, string> = typeof answersJson === 'string' ? JSON.parse(answersJson) : answersJson;
+  <script>
+    function initChat() {
+      const container = document.getElementById('chat-container');
+      const messagesEl = document.getElementById('chat-messages');
+      const form = document.getElementById('chat-form');
+      const input = document.getElementById('chat-input');
+      if (!container || !messagesEl || !form || !input) return;
 
-    function getAnswer(question: string): string {
-      const normalized = question.trim();
-      const key = Object.keys(answers).find((k) => k.toLowerCase() === normalized.toLowerCase());
-      return key ? answers[key] : fallbackAnswer;
-    }
-
-    function appendMessage(role: 'user' | 'bot', text: string) {
-      const div = document.createElement('div');
-      div.className = role === 'user' ? 'msg msg-user flex justify-end gap-3' : 'msg msg-bot flex gap-3';
-      div.setAttribute('data-role', role);
-      if (role === 'user') {
-        div.innerHTML = `<p class="text-surface-200">${escapeHtml(text)}</p><span class="text-surface-500 shrink-0 text-xs uppercase" aria-hidden="true">You</span>`;
-      } else {
-        div.innerHTML = `<span class="text-surface-500 shrink-0 text-xs uppercase" aria-hidden="true">AI</span><p class="text-surface-300">${escapeHtml(text)}</p>`;
+      let answers = {};
+      try {
+        const raw = container.getAttribute('data-answers') || '{}';
+        answers = JSON.parse(raw);
+      } catch (_) {
+        answers = {};
       }
-      messagesEl?.appendChild(div);
-      messagesEl?.scrollTo({ top: messagesEl.scrollHeight, behavior: 'smooth' });
-    }
+      const fallback = container.getAttribute('data-fallback') || "I don't have an answer for that — try a suggested question or reach out via the contact page.";
 
-    function escapeHtml(s: string): string {
-      const span = document.createElement('span');
-      span.textContent = s;
-      return span.innerHTML;
-    }
+      function getAnswer(question) {
+        const normalized = question.trim();
+        const key = Object.keys(answers).find((k) => k.toLowerCase() === normalized.toLowerCase());
+        return key ? answers[key] : fallback;
+      }
 
-    function sendQuestion(question: string) {
-      if (!question.trim()) return;
-      appendMessage('user', question);
-      const answer = getAnswer(question);
-      setTimeout(() => appendMessage('bot', answer), 300);
-      input.value = '';
-    }
+      function escapeHtml(s) {
+        const span = document.createElement('span');
+        span.textContent = s;
+        return span.innerHTML;
+      }
 
-    document.querySelectorAll('.suggestion-chip').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const q = (btn as HTMLButtonElement).getAttribute('data-question');
-        if (q) sendQuestion(q);
+      function appendMessage(role, text) {
+        const div = document.createElement('div');
+        div.className = role === 'user' ? 'msg msg-user flex justify-end gap-3' : 'msg msg-bot flex gap-3';
+        div.setAttribute('data-role', role);
+        if (role === 'user') {
+          div.innerHTML = '<p class="text-surface-200">' + escapeHtml(text) + '</p><span class="text-surface-500 shrink-0 text-xs uppercase" aria-hidden="true">You</span>';
+        } else {
+          div.innerHTML = '<span class="text-surface-500 shrink-0 text-xs uppercase" aria-hidden="true">AI</span><p class="text-surface-300">' + escapeHtml(text) + '</p>';
+        }
+        messagesEl.appendChild(div);
+        messagesEl.scrollTo({ top: messagesEl.scrollHeight, behavior: 'smooth' });
+      }
+
+      function sendQuestion(question) {
+        if (!question.trim()) return;
+        appendMessage('user', question);
+        const answer = getAnswer(question);
+        setTimeout(() => appendMessage('bot', answer), 300);
+        input.value = '';
+      }
+
+      document.querySelectorAll('#suggestions .suggestion-chip').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const q = btn.getAttribute('data-question');
+          if (q) sendQuestion(q);
+        });
       });
-    });
 
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!input?.value?.trim()) return;
-      sendQuestion(input.value.trim());
-    });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!input.value.trim()) return;
+        sendQuestion(input.value.trim());
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initChat);
+    } else {
+      initChat();
+    }
   </script>
 </BaseLayout>
