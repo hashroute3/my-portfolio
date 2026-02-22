@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const committees = [
+  {
+    role: 'Technical Program Committee Member',
+    organization: 'PEARC26 — Practice & Experience in Advanced Research Computing',
+    url: 'https://pearc.acm.org/pearc26/',
+    body: 'ACM',
+    year: '2026',
+    description:
+      'Reviewing and selecting technical submissions for one of the leading conferences on advanced research computing infrastructure, software, and applications.',
+  },
+  {
+    role: 'Technical Committee Member',
+    organization: 'Security and Privacy in Consumer Technology (SPC) — IEEE CTSOC',
+    url: 'https://ctsoc.ieee.org/technical/technical-committees/spc-tc?view=article&id=312:spc-tc-members&catid=21',
+    body: 'IEEE',
+    year: 'Present',
+    description:
+      'Contributing to the IEEE Consumer Technology Society's technical committee focused on security and privacy challenges in consumer-facing technology.',
+  },
+];
+---
+
+<BaseLayout
+  title="Give Back"
+  description="Mahendran Vasagam's contributions back to the community — technical program committees, standards bodies, and academic service."
+>
+  <article class="mx-auto max-w-3xl px-6 py-16">
+    <header>
+      <h1 class="font-serif text-3xl font-semibold text-surface-50">Give Back</h1>
+      <p class="mt-2 text-surface-400">
+        Ways I contribute to the broader technical community — reviewing research, shaping standards,
+        and helping grow the field.
+      </p>
+    </header>
+
+    <section class="mt-12" aria-labelledby="committees-heading">
+      <h2 id="committees-heading" class="font-serif text-xl font-semibold text-surface-100">
+        Program & Technical Committees
+      </h2>
+
+      <ul class="mt-6 space-y-6" role="list">
+        {committees.map((item) => (
+          <li class="rounded-xl border border-surface-800 bg-surface-900/50 p-6 transition-colors hover:border-surface-700">
+            <div class="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="rounded bg-surface-800 px-2 py-0.5 text-xs font-medium text-sky-400">
+                    {item.body}
+                  </span>
+                  <span class="text-xs text-surface-500">{item.year}</span>
+                </div>
+                <h3 class="mt-2 font-serif text-lg font-semibold text-surface-50">{item.role}</h3>
+                <p class="mt-1 text-sm text-surface-400">{item.organization}</p>
+                <p class="mt-3 text-sm leading-relaxed text-surface-400">{item.description}</p>
+              </div>
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="shrink-0 text-sm text-sky-400 hover:underline"
+              >
+                Learn more ↗
+              </a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  </article>
+</BaseLayout>
