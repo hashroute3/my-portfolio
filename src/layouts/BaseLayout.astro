@@ -12,6 +12,7 @@ interface Props {
 
 const { title, description = 'Staff Software Engineer — Personal portfolio and writing.', image, type = 'website' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImage = image ? new URL(image, Astro.site) : new URL('/logo.png', Astro.site);
 ---
 
 <!doctype html>
@@ -22,13 +23,23 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Mahendran Vasagam" />
+    <meta name="google-site-verification" content="lQzzaAkGIB8mvrACPuBAo28_YNPgXr6fHKXibJ6eK7A" />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/png" href="/logo.png" />
     <!-- Open Graph -->
+    <meta property="og:site_name" content="Mahendran Vasagam" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalURL} />
-    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+    <meta property="og:image" content={ogImage} />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@mahendranv" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

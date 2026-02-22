@@ -4,7 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://your-site.netlify.app',
+  site: 'https://mahendranvasagam.com',
   integrations: [
     tailwind({ applyBaseStyles: false }),
     mdx({
