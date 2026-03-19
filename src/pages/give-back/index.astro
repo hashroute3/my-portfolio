@@ -1,6 +1,37 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+const journalArticles = [
+  {
+    title: 'Ensuring Security in Modern Data Pipelines: Practical Strategies for Data Engineers',
+    authors: 'Mahendran Vasagam',
+    journal: 'International Journal of Intelligent Systems and Applications in Engineering',
+    year: '2024',
+    url: 'https://doi.org/10.17762/ijisae.v12i22s.8090',
+  },
+  {
+    title: 'Devops Lifecycle Management And Cloud Migration Assessments: A Security-Driven CICD Perspective',
+    authors: 'Ramesh Krishna Mahimalur, Mahendran Vasagam, Devi Manoharan',
+    journal: 'Journal of International Crisis and Risk Communication Research',
+    year: '2024',
+    url: 'https://doi.org/10.63278/jicrcr.vi.3670',
+  },
+  {
+    title: 'From Assessment to Automation: DevOps Lifecycle Management for Secure Cloud Migration and CICD Implementation.',
+    authors: 'Ramesh Krishna Mahimalur, Mahendran Vasagam, Devi Manoharan',
+    journal: 'Power System Technology',
+    year: '2026',
+    url: 'https://doi.org/10.5281/zenodo.18639741',
+  },
+  {
+    title: 'Learning Execution Plan Embeddings for Multi-Dimensional Query Resource Prediction',
+    authors: 'Mahendran Vasagam, Ashok Kumar, Anshul Garg',
+    journal: 'IEEE Access',
+    year: '2026',
+    url: 'https://doi.org/10.1109/access.2026.3670242',
+  },
+];
+
 const committees = [
   {
     role: 'Technical Program Committee Member',
@@ -68,6 +99,35 @@ const committees = [
           </li>
         ))}
       </ul>
+    </section>
+
+    <section class="mt-16" aria-labelledby="journal-articles-heading">
+      <h2 id="journal-articles-heading" class="font-serif text-xl font-semibold text-surface-100">
+        Journal Articles
+      </h2>
+      <p class="mt-2 text-surface-400">
+        Selected peer-reviewed publications. Each entry links to the official landing page.
+      </p>
+
+      <ol class="mt-6 space-y-4" role="list">
+        {journalArticles.map((paper) => (
+          <li class="rounded-xl border border-surface-800 bg-surface-900/50 p-6">
+            <p class="text-sm text-surface-300">
+              <span class="font-medium text-surface-200">{paper.authors}</span>
+              <span class="text-surface-500"> ({paper.year}). </span>
+              <a href={paper.url} target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">
+                {paper.title}
+              </a>
+              <span class="text-surface-500">. </span>
+              <span class="italic text-surface-400">{paper.journal}</span>
+              <span class="text-surface-500">. </span>
+              <a href={paper.url} target="_blank" rel="noopener noreferrer" class="text-surface-400 hover:underline">
+                {paper.url}
+              </a>
+            </p>
+          </li>
+        ))}
+      </ol>
     </section>
   </article>
 </BaseLayout>
