@@ -1,37 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const journalArticles = [
-  {
-    title: 'Ensuring Security in Modern Data Pipelines: Practical Strategies for Data Engineers',
-    authors: 'Mahendran Vasagam',
-    journal: 'International Journal of Intelligent Systems and Applications in Engineering',
-    year: '2024',
-    url: 'https://doi.org/10.17762/ijisae.v12i22s.8090',
-  },
-  {
-    title: 'Devops Lifecycle Management And Cloud Migration Assessments: A Security-Driven CICD Perspective',
-    authors: 'Ramesh Krishna Mahimalur, Mahendran Vasagam, Devi Manoharan',
-    journal: 'Journal of International Crisis and Risk Communication Research',
-    year: '2024',
-    url: 'https://doi.org/10.63278/jicrcr.vi.3670',
-  },
-  {
-    title: 'From Assessment to Automation: DevOps Lifecycle Management for Secure Cloud Migration and CICD Implementation.',
-    authors: 'Ramesh Krishna Mahimalur, Mahendran Vasagam, Devi Manoharan',
-    journal: 'Power System Technology',
-    year: '2026',
-    url: 'https://doi.org/10.5281/zenodo.18639741',
-  },
-  {
-    title: 'Learning Execution Plan Embeddings for Multi-Dimensional Query Resource Prediction',
-    authors: 'Mahendran Vasagam, Ashok Kumar, Anshul Garg',
-    journal: 'IEEE Access',
-    year: '2026',
-    url: 'https://doi.org/10.1109/access.2026.3670242',
-  },
-];
-
 const committees = [
   {
     role: 'Technical Program Committee Member',
@@ -52,24 +21,96 @@ const committees = [
       "Contributing to the IEEE Consumer Technology Society's technical committee focused on security and privacy challenges in consumer-facing technology.",
   },
 ];
+
+const communityPlaceholder = [
+  {
+    title: 'Community initiatives',
+    body:
+      'Add highlights of meetups, local chapters, or volunteer teaching — replace this placeholder with your own entries.',
+  },
+];
+
+const hackathonPlaceholder = [
+  {
+    title: 'Hackathons & build events',
+    body: 'List events you organized, mentored at, or won — placeholder entry.',
+  },
+];
+
+const mentorshipPlaceholder = [
+  {
+    title: 'Mentorship',
+    body: 'Career or technical mentorship (e.g. programs, recurring office hours) — placeholder entry.',
+  },
+];
+
+const ossPlaceholder = [
+  {
+    title: 'Open-source contributions',
+    body: 'Notable OSS projects, maintainership, or sustained contributions — placeholder entry. Link to GitHub as needed.',
+  },
+];
 ---
 
 <BaseLayout
   title="Give Back"
-  description="Mahendran Vasagam's contributions back to the community — technical program committees, standards bodies, and academic service."
+  description="Mahendran Vasagam — community work, mentorship, program committees, hackathons, and open-source contributions."
 >
-  <article class="mx-auto max-w-3xl px-6 py-16">
+  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
     <header>
       <h1 class="font-serif text-3xl font-semibold text-surface-50">Give Back</h1>
       <p class="mt-2 text-surface-400">
-        Ways I contribute to the broader technical community — reviewing research, shaping standards,
-        and helping grow the field.
+        Ways I contribute outside day-to-day work — community programs, events, mentorship, reviewing,
+        and open source. For formal publications, see{' '}
+        <a href="/publications/" class="text-sky-400 hover:underline">Publications</a>.
       </p>
     </header>
 
+    <section class="mt-12" aria-labelledby="community-heading">
+      <h2 id="community-heading" class="font-serif text-xl font-semibold text-surface-100">
+        Community work
+      </h2>
+      <ul class="mt-6 space-y-4" role="list">
+        {communityPlaceholder.map((item) => (
+          <li class="rounded-xl border border-dashed border-surface-700 bg-surface-900/30 p-6">
+            <h3 class="font-medium text-surface-200">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-surface-400">{item.body}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mt-12" aria-labelledby="hackathons-heading">
+      <h2 id="hackathons-heading" class="font-serif text-xl font-semibold text-surface-100">
+        Hackathons
+      </h2>
+      <ul class="mt-6 space-y-4" role="list">
+        {hackathonPlaceholder.map((item) => (
+          <li class="rounded-xl border border-dashed border-surface-700 bg-surface-900/30 p-6">
+            <h3 class="font-medium text-surface-200">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-surface-400">{item.body}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mt-12" aria-labelledby="mentorship-heading">
+      <h2 id="mentorship-heading" class="font-serif text-xl font-semibold text-surface-100">
+        Mentorship
+      </h2>
+      <ul class="mt-6 space-y-4" role="list">
+        {mentorshipPlaceholder.map((item) => (
+          <li class="rounded-xl border border-dashed border-surface-700 bg-surface-900/30 p-6">
+            <h3 class="font-medium text-surface-200">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-surface-400">{item.body}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
     <section class="mt-12" aria-labelledby="committees-heading">
       <h2 id="committees-heading" class="font-serif text-xl font-semibold text-surface-100">
-        Program & Technical Committees
+        Judging, program committees & SME roles
       </h2>
 
       <ul class="mt-6 space-y-6" role="list">
@@ -101,33 +142,18 @@ const committees = [
       </ul>
     </section>
 
-    <section class="mt-16" aria-labelledby="journal-articles-heading">
-      <h2 id="journal-articles-heading" class="font-serif text-xl font-semibold text-surface-100">
-        Journal Articles
+    <section class="mt-12" aria-labelledby="oss-heading">
+      <h2 id="oss-heading" class="font-serif text-xl font-semibold text-surface-100">
+        Open-source contributions
       </h2>
-      <p class="mt-2 text-surface-400">
-        Selected peer-reviewed publications. Each entry links to the official landing page.
-      </p>
-
-      <ol class="mt-6 space-y-4" role="list">
-        {journalArticles.map((paper) => (
-          <li class="rounded-xl border border-surface-800 bg-surface-900/50 p-6">
-            <p class="text-sm text-surface-300">
-              <span class="font-medium text-surface-200">{paper.authors}</span>
-              <span class="text-surface-500"> ({paper.year}). </span>
-              <a href={paper.url} target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline">
-                {paper.title}
-              </a>
-              <span class="text-surface-500">. </span>
-              <span class="italic text-surface-400">{paper.journal}</span>
-              <span class="text-surface-500">. </span>
-              <a href={paper.url} target="_blank" rel="noopener noreferrer" class="text-surface-400 hover:underline">
-                {paper.url}
-              </a>
-            </p>
+      <ul class="mt-6 space-y-4" role="list">
+        {ossPlaceholder.map((item) => (
+          <li class="rounded-xl border border-dashed border-surface-700 bg-surface-900/30 p-6">
+            <h3 class="font-medium text-surface-200">{item.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-surface-400">{item.body}</p>
           </li>
         ))}
-      </ol>
+      </ul>
     </section>
   </article>
 </BaseLayout>

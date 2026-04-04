@@ -1,0 +1,157 @@
+---
+import type { Publication } from '../data/publications';
+import { isIndexablePublication } from '../lib/publicationMetadata';
+
+interface Props {
+  publication: Publication;
+  /** When false, title is not linked (e.g. on the per-article page). Default: true for indexable papers. */
+  showTitleLink?: boolean;
+}
+
+const { publication: p, showTitleLink = true } = Astro.props;
+const linkTitle = showTitleLink && isIndexablePublication(p);
+
+/** ISO-8601 date for schema.org (year-only is valid for datePublished). */
+const datePublished =
+  /^\d{4}$/.test(p.year) ? `${p.year}-01-01` : p.year;
+
+function doiStringFromUrl(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  const m = url.match(/doi\.org\/(.+)$/i);
+  return m ? decodeURIComponent(m[1]) : undefined;
+}
+
+const doiForSchema = doiStringFromUrl(p.doiUrl);
+const primaryUrl = p.doiUrl ?? p.publisherUrl ?? p.pdfUrl;
+---
+
+<div
+  class="rounded-xl border border-surface-800 bg-surface-900/50 p-5 sm:p-6"
+  itemscope
+  itemtype="https://schema.org/ScholarlyArticle"
+>
+  {doiForSchema && (
+    <meta itemprop="identifier" content={`doi:${doiForSchema}`} />
+  )}
+  <h3 class="font-serif text-lg font-semibold leading-snug text-surface-50">
+    {linkTitle ? (
+      <a
+        href={`/publications/${p.id}/`}
+        class="text-surface-50 transition-colors hover:text-sky-400"
+        itemprop="name"
+      >
+        {p.title}
+      </a>
+    ) : (
+      <span itemprop="name">{p.title}</span>
+    )}
+  </h3>
+
+  <p class="mt-3 text-sm leading-relaxed text-surface-300">
+    <span class="text-surface-500">Authors:</span>{' '}
+    {p.authors.map((name, i) => (
+      <span>
+        {i > 0 ? <span class="text-surface-600">, </span> : null}
+        <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <span itemprop="name">{name}</span>
+        </span>
+      </span>
+    ))}
+  </p>
+
+  <p class="mt-2 text-sm text-surface-300">
+    <span class="text-surface-500">Journal / Conference: </span>
+    <span itemprop="isPartOf" itemscope itemtype="https://schema.org/Periodical">
+      <span itemprop="name">{p.venue}</span>
+    </span>
+  </p>
+
+  <p class="mt-1 text-sm text-surface-300">
+    <span class="text-surface-500">Year:</span>{' '}
+    <time itemprop="datePublished" datetime={datePublished}>{p.year}</time>
+  </p>
+
+  <div class="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-surface-800/80 pt-4 text-sm">
+    <span class="w-full text-xs font-medium uppercase tracking-wide text-surface-500 sm:w-auto">Links</span>
+    {p.doiUrl ? (
+      <a
+        href={p.doiUrl}
+        class="break-all text-sky-400 hover:underline"
+        target="_blank"
+        rel="noopener noreferrer"
+        itemprop={primaryUrl === p.doiUrl ? 'url' : undefined}
+      >
+        DOI
+      </a>
+    ) : (
+      <span class="text-surface-600">DOI: —</span>
+    )}
+    {p.publisherUrl ? (
+      <a
+        href={p.publisherUrl}
+        class="break-all text-sky-400 hover:underline"
+        target="_blank"
+        rel="noopener noreferrer"
+        itemprop={primaryUrl === p.publisherUrl ? 'url' : undefined}
+      >
+        Publisher
+      </a>
+    ) : (
+      <span class="text-surface-600">Publisher: —</span>
+    )}
+    {p.pdfUrl ? (
+      <a
+        href={p.pdfUrl}
+        class="break-all text-sky-400 hover:underline"
+        target="_blank"
+        rel="noopener noreferrer"
+        itemprop={primaryUrl === p.pdfUrl ? 'url' : undefined}
+      >
+        PDF
+      </a>
+    ) : (
+      <span class="text-surface-600">PDF: —</span>
+    )}
+    {p.googleScholarUrl ? (
+      <a
+        href={p.googleScholarUrl}
+        class="break-all text-sky-400 hover:underline"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Google Scholar
+      </a>
+    ) : (
+      <span class="text-surface-600">Google Scholar: —</span>
+    )}
+  </div>
+
+  <details class="bibtex-details group mt-4 border-t border-surface-800/80 pt-4">
+    <summary
+      class="cursor-pointer list-none text-sm font-medium text-surface-300 marker:content-none [&::-webkit-details-marker]:hidden"
+    >
+      <span class="inline-flex items-center gap-2">
+        BibTeX
+        <svg
+          class="size-4 shrink-0 text-surface-500 transition-transform group-open:rotate-180"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </span>
+    </summary>
+    <pre
+      class="mt-3 max-h-64 overflow-x-auto overflow-y-auto rounded-lg border border-surface-800 bg-surface-950/80 p-4 text-left text-xs leading-relaxed text-surface-300"
+      tabindex="-1"
+    ><code>{p.bibtex.trim()}</code></pre>
+  </details>
+</div>
+
+<style>
+  .bibtex-details summary {
+    user-select: none;
+  }
+</style>

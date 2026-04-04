@@ -1,21 +1,26 @@
 ---
 const currentPath = Astro.url.pathname;
 const navItems = [
-  { href: '/#experience', label: 'journey' },
-  { href: '/blog/', label: 'thoughts' },
-  { href: '/give-back/', label: 'give-back' },
-  { href: '/skills/', label: 'skills' },
-  { href: '/ai/', label: 'ai' },
-  { href: '/contact/', label: 'contact' },
+  { href: '/', label: 'Home' },
+  { href: '/research/', label: 'Research' },
+  { href: '/publications/', label: 'Publications' },
+  { href: '/give-back/', label: 'Give Back' },
+  { href: '/#projects', label: 'Projects' },
 ];
 ---
 
 <header class="sticky top-0 z-50 border-b border-surface-800/80 bg-surface-950/90 backdrop-blur-sm">
-  <nav class="mx-auto flex max-w-3xl items-center justify-end gap-6 px-6 py-4" aria-label="Main navigation">
-    <ul class="flex items-center gap-6">
+  <nav
+    class="mx-auto flex max-w-3xl flex-wrap items-center justify-end gap-x-4 gap-y-2 px-4 py-4 sm:gap-x-6 sm:px-6"
+    aria-label="Main navigation"
+  >
+    <ul class="flex flex-wrap items-center justify-end gap-x-4 gap-y-2 sm:gap-x-6">
       {navItems.map((item) => {
         const isExternal = item.href.startsWith('http') || item.href.startsWith('#');
-        const isActive = !isExternal && (currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href)));
+        const isHome = item.href === '/';
+        const isActive = isHome
+          ? currentPath === '/'
+          : !isExternal && (currentPath === item.href || currentPath.startsWith(item.href));
         return (
           <li>
             <a

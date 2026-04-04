@@ -19,6 +19,27 @@ export const social = [
   { label: 'Email', href: 'mailto:mahendran.vasagam@gmail.com', icon: 'email' },
 ] as const;
 
+export const academicProfiles = [
+  {
+    label: 'ORCID',
+    href: 'https://orcid.org/0009-0009-9382-1409',
+    description: 'Persistent researcher identifier used by academic publishers and indexers.',
+    placeholder: false,
+  },
+  {
+    label: 'Semantic Scholar',
+    href: 'https://www.semanticscholar.org/author/M.-Vasagam/2352740032',
+    description: 'Author profile used by academic discovery systems and citation engines.',
+    placeholder: false,
+  },
+  {
+    label: 'OpenAlex',
+    href: 'https://openalex.org/authors/A5128061623',
+    description: 'Open scholarly graph author record for AI and research crawlers.',
+    placeholder: false,
+  },
+] as const;
+
 /** Experience — structure matches Anayat’s layout. Replace placeholders with your full history from LinkedIn. */
 export const experience = [
   {

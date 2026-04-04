@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScholarlyPublication from '../../components/ScholarlyPublication.astro';
+import { getAllPublications } from '../../data/publications';
+import {
+  buildCitationMeta,
+  isIndexablePublication,
+  scholarlyArticleJsonLd,
+} from '../../lib/publicationMetadata';
+
+export function getStaticPaths() {
+  return getAllPublications()
+    .filter(isIndexablePublication)
+    .map((p) => ({ params: { id: p.id } }));
+}
+
+const { id } = Astro.params;
+const pub = getAllPublications().find((p) => p.id === id)!;
+
+const site = Astro.site ?? new URL('https://mahendranvasagam.com');
+const canonical = new URL(Astro.url.pathname, site).href;
+const description = `${pub.title} — ${pub.authors.join(', ')}. ${pub.venue} (${pub.year}).`;
+const citationTags = buildCitationMeta(pub, site);
+const jsonLd = scholarlyArticleJsonLd(pub, site, canonical);
+const pageTitle = `${pub.title} | Mahendran Vasagam`;
+---
+
+<BaseLayout title={pageTitle} description={description} type="article">
+  {citationTags.map((t) => (
+    <meta name={t.name} content={t.content} slot="head" />
+  ))}
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(jsonLd)} />
+
+  <article class="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
+    <nav class="text-sm text-surface-500" aria-label="Breadcrumb">
+      <a href="/publications/" class="text-sky-400 hover:underline">Publications</a>
+      <span class="mx-2 text-surface-600">/</span>
+      <span class="text-surface-400">Article</span>
+    </nav>
+    <div class="mt-6">
+      <ScholarlyPublication publication={pub} showTitleLink={false} />
+    </div>
+  </article>
+</BaseLayout>
