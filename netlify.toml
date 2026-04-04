@@ -6,11 +6,15 @@
   publish = "dist"
   environment = { NODE_VERSION = "20" }
 
-# Optional: redirects for SPA or custom routes
-# [[redirects]]
-#   from = "/*"
-#   to = "/index.html"
-#   status = 200
+[[redirects]]
+  from = "/research"
+  to = "/publications"
+  status = 301
+
+[[redirects]]
+  from = "/research/"
+  to = "/publications/"
+  status = 301
 
 # Optional: Edge Functions (uncomment if using Netlify Edge)
 # [functions]

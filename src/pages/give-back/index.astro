@@ -3,22 +3,68 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const committees = [
   {
-    role: 'Technical Program Committee Member',
-    organization: 'PEARC26 — Practice & Experience in Advanced Research Computing',
-    url: 'https://pearc.acm.org/pearc26/',
-    body: 'ACM',
-    year: '2026',
+    role: 'IEEE Senior Member',
+    organization: 'Institute of Electrical and Electronics Engineers (IEEE)',
+    url: 'https://www.ieee.org/membership/senior/',
+    body: 'IEEE',
     description:
-      'Reviewing and selecting technical submissions for one of the leading conferences on advanced research computing infrastructure, software, and applications.',
+      'Senior Member grade recognizing sustained professional achievement, significant performance, and peer-reviewed elevation within IEEE.',
   },
   {
     role: 'Technical Committee Member',
-    organization: 'Security and Privacy in Consumer Technology (SPC) — IEEE CTSOC',
+    organization: 'Security and Privacy in Consumer Technology (SPC) — IEEE Consumer Technology Society',
     url: 'https://ctsoc.ieee.org/technical/technical-committees/spc-tc?view=article&id=312:spc-tc-members&catid=21',
-    body: 'IEEE',
-    year: 'Present',
+    body: 'IEEE CTSoc',
     description:
-      "Contributing to the IEEE Consumer Technology Society's technical committee focused on security and privacy challenges in consumer-facing technology.",
+      'Active technical committee member contributing to the security and privacy agenda for consumer technology research and practice.',
+  },
+  {
+    role: 'Technical Committee Member',
+    organization: 'ICCE-Taiwan 2026 — IEEE International Conference on Consumer Electronics',
+    url: 'https://icce-taiwan.org/2026/',
+    body: 'IEEE',
+    description:
+      'Serving on the technical committee for IEEE ICCE-Taiwan, supporting review and program quality for consumer electronics research.',
+  },
+  {
+    role: 'Professional Member',
+    organization: 'Association for Computing Machinery (ACM)',
+    url: 'https://www.acm.org/membership',
+    body: 'ACM',
+    description:
+      'Active professional member of ACM, supporting the advancement of computing as a science and profession.',
+  },
+  {
+    role: 'Technical Committee Member',
+    organization: 'PEARC 2026 — Practice and Experience in Advanced Research Computing',
+    url: 'https://pearc.acm.org/pearc26/',
+    body: 'ACM',
+    description:
+      'Contributing to the technical program committee for PEARC 2026, reviewing work in advanced research computing infrastructure, software, and applications.',
+  },
+  {
+    role: 'Technical Committee Member',
+    organization: 'CHI 2026 — ACM Human-Computer Interaction',
+    url: 'https://chi2026.acm.org/',
+    body: 'ACM',
+    description:
+      'Serving on the technical committee for CHI 2026, supporting peer review and program development for the HCI community.',
+  },
+  {
+    role: 'Technical Program Committee Member',
+    organization: 'EuroSciPy 2026 — European Conference on Python in Science',
+    url: 'https://www.euroscipy.org/',
+    body: 'EuroSciPy',
+    description:
+      'Supporting the technical program committee for EuroSciPy 2026, focused on scientific computing and the Python ecosystem.',
+  },
+  {
+    role: 'Working Group Participant',
+    organization: 'Cloud Security Alliance (CSA) — AI Safety Working Group',
+    url: 'https://cloudsecurityalliance.org/',
+    body: 'CSA',
+    description:
+      'Active member contributing to discussions and community work around AI safety, security, and responsible adoption.',
   },
 ];
 
@@ -122,7 +168,6 @@ const ossPlaceholder = [
                   <span class="rounded bg-surface-800 px-2 py-0.5 text-xs font-medium text-sky-400">
                     {item.body}
                   </span>
-                  <span class="text-xs text-surface-500">{item.year}</span>
                 </div>
                 <h3 class="mt-2 font-serif text-lg font-semibold text-surface-50">{item.role}</h3>
                 <p class="mt-1 text-sm text-surface-400">{item.organization}</p>

@@ -185,12 +185,9 @@ export const journalArticles: Publication[] = [
   url={https://ieeexplore.ieee.org/document/11421305}
 }`,
   },
-  placeholderJournalArticle,
 ];
 
-export const conferencePapers: Publication[] = [
-  placeholderConferencePaper,
-];
+export const conferencePapers: Publication[] = [];
 
 export const preprintsAndTechnical: Publication[] = [
   {
@@ -228,7 +225,6 @@ export const preprintsAndTechnical: Publication[] = [
   url={https://medium.com/@mahendran_v3/beyond-tagging-a-blueprint-for-real-time-cost-attribution-in-data-platforms-c705e8a04016}
 }`,
   },
-  placeholderPreprint,
 ];
 
 export function getAllPublications(): Publication[] {

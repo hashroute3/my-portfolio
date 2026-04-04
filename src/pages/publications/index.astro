@@ -19,11 +19,7 @@ const itemListLd = publicationsItemListJsonLd(getAllPublications(), site);
     <header>
       <h1 class="font-serif text-3xl font-semibold text-surface-50">Publications</h1>
       <p class="mt-2 max-w-2xl text-surface-400">
-        Research-style bibliography: journal articles, conference papers, and preprints with DOI,
-        publisher and PDF links, BibTeX, and structured{' '}
-        <code class="rounded bg-surface-800 px-1.5 py-0.5 text-xs">schema.org/ScholarlyArticle</code>{' '}
-        metadata for crawlers and discovery. Indexable papers link to a dedicated page with
-        additional citation metadata.
+        Selected journal articles, conference papers, and technical writing by Mahendran Vasagam.
       </p>
       <nav class="mt-6 overflow-x-auto pb-1" aria-label="Publication sections">
         <ul class="flex min-w-max gap-3 text-sm text-surface-400">
@@ -93,11 +89,17 @@ const itemListLd = publicationsItemListJsonLd(getAllPublications(), site);
       <p class="mt-2 text-sm text-surface-500">
         Conference and workshop proceedings.
       </p>
-      <div class="mt-8 flex flex-col gap-8">
-        {conferencePapers.map((pub) => (
-          <ScholarlyPublication publication={pub} />
-        ))}
-      </div>
+      {conferencePapers.length > 0 ? (
+        <div class="mt-8 flex flex-col gap-8">
+          {conferencePapers.map((pub) => (
+            <ScholarlyPublication publication={pub} />
+          ))}
+        </div>
+      ) : (
+        <p class="mt-6 rounded-xl border border-dashed border-surface-800 bg-surface-900/30 p-5 text-sm text-surface-500">
+          No conference papers listed yet.
+        </p>
+      )}
     </section>
 
     <section class="mt-16" aria-labelledby="preprint-heading">
