@@ -6,8 +6,8 @@ const navItems = [
   { href: '/publications/', label: 'Publications' },
   { href: '/give-back/', label: 'Give Back' },
   { href: '/#projects', label: 'Projects' },
+  { href: '/ai/', label: 'AI' },
 ];
-const secondaryItem = { href: '/ai/', label: 'AI' };
 ---
 
 <header class="sticky top-0 z-50 border-b border-surface-800/80 bg-surface-950/90 backdrop-blur-sm">
@@ -37,16 +37,5 @@ const secondaryItem = { href: '/ai/', label: 'AI' };
         );
       })}
     </ul>
-    <a
-      href={secondaryItem.href}
-      class:list={[
-        'rounded-full border px-3 py-1 text-sm font-medium transition-colors',
-        currentPath === secondaryItem.href || currentPath.startsWith(secondaryItem.href)
-          ? 'border-sky-400/60 text-sky-400'
-          : 'border-surface-700 text-surface-400 hover:border-surface-500 hover:text-surface-100',
-      ]}
-    >
-      {secondaryItem.label}
-    </a>
   </nav>
 </header>

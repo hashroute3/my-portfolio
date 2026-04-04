@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScholarlyPublication from '../../components/ScholarlyPublication.astro';
-import { getAllPublications, journalArticles, conferencePapers, preprintsAndTechnical } from '../../data/publications';
+import { getAllPublications, journalArticles, preprintsAndTechnical } from '../../data/publications';
 import { academicProfiles } from '../../data/profile';
 import { publicationsItemListJsonLd } from '../../lib/publicationMetadata';
 
@@ -26,11 +26,6 @@ const itemListLd = publicationsItemListJsonLd(getAllPublications(), site);
           <li>
             <a href="#journal-heading" class="rounded-full border border-surface-800 px-3 py-1.5 hover:border-surface-700 hover:text-surface-100">
               Journal Articles
-            </a>
-          </li>
-          <li>
-            <a href="#conference-heading" class="rounded-full border border-surface-800 px-3 py-1.5 hover:border-surface-700 hover:text-surface-100">
-              Conference Papers
             </a>
           </li>
           <li>
@@ -80,26 +75,6 @@ const itemListLd = publicationsItemListJsonLd(getAllPublications(), site);
           <ScholarlyPublication publication={pub} />
         ))}
       </div>
-    </section>
-
-    <section class="mt-16" aria-labelledby="conference-heading">
-      <h2 id="conference-heading" class="font-serif text-xl font-semibold text-surface-100">
-        Conference Papers
-      </h2>
-      <p class="mt-2 text-sm text-surface-500">
-        Conference and workshop proceedings.
-      </p>
-      {conferencePapers.length > 0 ? (
-        <div class="mt-8 flex flex-col gap-8">
-          {conferencePapers.map((pub) => (
-            <ScholarlyPublication publication={pub} />
-          ))}
-        </div>
-      ) : (
-        <p class="mt-6 rounded-xl border border-dashed border-surface-800 bg-surface-900/30 p-5 text-sm text-surface-500">
-          No conference papers listed yet.
-        </p>
-      )}
     </section>
 
     <section class="mt-16" aria-labelledby="preprint-heading">
